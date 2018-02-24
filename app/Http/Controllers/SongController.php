@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ProbeEvent;
 use App\Song;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class SongController extends Controller
 {
@@ -23,7 +25,7 @@ class SongController extends Controller
     {
         $path = $request->file('track')->store('tracks');
 
-        Song::create([
+        $song = Song::create([
             'name' => $request->input('name'),
             'track' => $path,
             'creators' => $request->input('creators'),
@@ -31,6 +33,8 @@ class SongController extends Controller
             'year' => $request->input('year'),
             'user_id' => auth()->user()->id,
         ]);
+
+        event(new ProbeEvent($song));
 
         return redirect()->route('songs.index');
     }
@@ -45,6 +49,10 @@ class SongController extends Controller
     public function update(Request $request, Song $song)
     {
         if ($request->hasFile('track')) {
+            if (Storage::exists($song->track)) {
+                Storage::delete($song->track);
+            }
+
             $song->track = $request->file('track')->store('tracks');
         }
 
@@ -53,6 +61,8 @@ class SongController extends Controller
         $song->performers = $request->input('performers');
         $song->year = $request->input('year');
         $song->save();
+
+        event(new ProbeEvent($song));
 
         return redirect()->route('songs.index');
     }
@@ -63,7 +73,7 @@ class SongController extends Controller
             $verse->delete();
         }
 
-        if (is_file($song->track)) {
+        if (Storage::exists($song->track)) {
             Storage::delete($song->track);
         }
 

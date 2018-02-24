@@ -25,4 +25,15 @@ class Song extends Model
     {
         return $this->hasMany(Verse::class);
     }
+
+    public function getSecondsAttribute()
+    {
+        if (!isset($this->attributes["duration"])) {
+            return null;
+        }
+
+        $parts = explode(":", $this->attributes["duration"]);
+        
+        return ((int) $parts[0] * 60) + (int) $parts[1];
+    }
 }

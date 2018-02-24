@@ -12,7 +12,7 @@
                             <form id="delete-{{ $verse->id }}" action="{{ route('songs.verses.destroy', [$song, $verse])}}" method="POST" style="display: inline">
                                 @method('DELETE')
                                 @csrf
-                                <a href="#" onclick="event.preventDefault(); document.getElementById('delete-{{ $verse->id }}').submit(); ">delete</a>
+                                <a href="#" onclick="event.preventDefault(); confirm('Are you sure?') && document.getElementById('delete-{{ $verse->id }}').submit(); ">delete</a>
                             </form>
                         </li>
                     @endforeach
