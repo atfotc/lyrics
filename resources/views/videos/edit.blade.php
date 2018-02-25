@@ -15,7 +15,7 @@
                     <div class="form-group">
                         <ul class="available-slides">
                             @foreach ($video->song->verses as $verse)
-                                <li class="slide" data-id="{{ $verse->id }}" data-words="{{ addslashes($verse->words) }}">
+                                <li class="slide" data-id="{{ $verse->id }}" data-width="{{ $video->width }}" data-height="{{ $video->height }}" data-padding="{{ $video->padding }}" data-fade="{{ $video->fade }}" data-words="{{ addslashes($verse->words) }}">
                                     {{ $verse->words }}
                                 </li>
                             @endforeach

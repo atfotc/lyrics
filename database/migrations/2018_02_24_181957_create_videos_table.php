@@ -16,10 +16,10 @@ class CreateVideosTable extends Migration
         Schema::create('videos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('width')->nullable();
-            $table->integer('height')->nullable();
-            $table->integer('padding')->nullable();
-            $table->integer('fade')->nullable();
+            $table->integer('width')->default(1280);
+            $table->integer('height')->default(720);
+            $table->integer('padding')->default(50);
+            $table->integer('fade')->default(0);
             $table->integer('song_id');
             $table->integer('user_id');
             $table->timestamps();
