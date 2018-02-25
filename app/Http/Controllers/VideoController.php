@@ -7,79 +7,46 @@ use Illuminate\Http\Request;
 
 class VideoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        return view('videos.index', [
+            'videos' => auth()->user()->videos,
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        return view('videos.create', [
+            'songs' => auth()->user()->songs,
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $video = Video::create([
+            'name' => $request->input('name'),
+            'song_id' => $request->input('song_id'),
+            'user_id' => auth()->user()->id,
+        ]);
+
+        return redirect()->route('videos.edit', [$video]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Video  $video
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Video $video)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Video  $video
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Video $video)
     {
-        //
+        return view('videos.edit', [
+            'video' => $video,
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Video  $video
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Video $video)
     {
-        //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Video  $video
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Video $video)
     {
-        //
+        $video->delete();
+
+        return redirect()->route('videos.index');
     }
 }

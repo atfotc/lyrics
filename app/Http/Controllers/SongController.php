@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Events\ProbeEvent;
+use App\Events\WaveformEvent;
 use App\Song;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class SongController extends Controller
 {
@@ -35,6 +37,7 @@ class SongController extends Controller
         ]);
 
         event(new ProbeEvent($song));
+        event(new WaveformEvent($song));
 
         return redirect()->route('songs.index');
     }
@@ -53,6 +56,10 @@ class SongController extends Controller
                 Storage::delete($song->track);
             }
 
+            if (Storage::exists($song->waveform)) {
+                Storage::delete($song->waveform);
+            }
+
             $song->track = $request->file('track')->store('tracks');
         }
 
@@ -63,6 +70,7 @@ class SongController extends Controller
         $song->save();
 
         event(new ProbeEvent($song));
+        event(new WaveformEvent($song));
 
         return redirect()->route('songs.index');
     }
@@ -77,8 +85,17 @@ class SongController extends Controller
             Storage::delete($song->track);
         }
 
+        if (Storage::exists($song->waveform)) {
+            Storage::delete($song->waveform);
+        }
+
         $song->delete();
 
         return redirect()->route('songs.index');
+    }
+
+    public function stream(Song $song)
+    {
+        return new BinaryFileResponse(Storage::path($song->track));
     }
 }

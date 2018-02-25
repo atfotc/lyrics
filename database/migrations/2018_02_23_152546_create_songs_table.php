@@ -16,7 +16,10 @@ class CreateSongsTable extends Migration
         Schema::create('songs', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('type')->nullable();
+            $table->string('size')->nullable();
             $table->string('track')->nullable();
+            $table->string('waveform')->nullable();
             $table->string('duration')->nullable();
             $table->string('creators')->nullable();
             $table->string('performers')->nullable();

@@ -11,5 +11,8 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\ProbeEvent' => [
             'App\Listeners\ProbeEventListener',
         ],
+        'App\Events\WaveformEvent' => [
+            'App\Listeners\WaveformEventListener',
+        ],
     ];
 }

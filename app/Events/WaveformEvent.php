@@ -5,7 +5,7 @@ namespace App\Events;
 use App\Song;
 use Illuminate\Queue\SerializesModels;
 
-class ProbeEvent
+class WaveformEvent
 {
     use SerializesModels;
 

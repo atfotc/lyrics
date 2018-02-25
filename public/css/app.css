@@ -10000,3 +10000,34 @@ a.text-dark:focus {
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
+.video .available-slides {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.video .available-slides li {
+  margin: 0;
+  padding: 0;
+  padding-right: 10px;
+  display: inline;
+}
+
+.video .waveform {
+  width: 100%;
+  height: 200px;
+  position: relative;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.video .waveform .tracker {
+  width: 1px;
+  height: 70%;
+  position: absolute;
+  top: 15%;
+  left: 0;
+  border-right: solid 1px rgba(255, 0, 0, 0.5);
+}
+

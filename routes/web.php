@@ -17,4 +17,6 @@ Route::view('/', 'home')->middleware('auth');
 Route::view('/home', 'home')->middleware('auth');
 
 Route::resource('songs', 'SongController')->middleware('auth');
+Route::get('songs/{song}/stream', 'SongController@stream')->name('songs.stream')->middleware('auth');
 Route::resource('songs.verses', 'VerseController')->middleware('auth');
+Route::resource('videos', 'VideoController')->middleware('auth');
