@@ -23,6 +23,8 @@ class WaveformEventListener implements ShouldQueue
         // $command = "ffmpeg -i /path/to/input -filter_complex 'compand,showwavespic=s=2048x480:colors=#00000099' -frames:v 1 /path/to/output 2>&1";
         $command = "ffmpeg -i {$trackPath} -filter_complex 'showwavespic=s=2048x480:colors=#00000099' -frames:v 1 {$waveformPath} 2>&1";
 
+        info($command);
+
         exec($command, $output);
 
         // Log::info($command);
